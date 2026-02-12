@@ -38,6 +38,16 @@ const filterHeaderOverrides: Record<string, string> = {
   "1,10,2.locality.longitude1": "Longitude",
 };
 
+const CSV_FORMULA_PREFIX = /^[=+\-@]/;
+
+function sanitizeCsvCell(value: string): string {
+  const firstNonWhitespace = value.trimStart();
+  if (CSV_FORMULA_PREFIX.test(firstNonWhitespace)) {
+    return `'${value}`;
+  }
+  return value;
+}
+
 function createEmptyFilters(headers: string[]): FilterState {
   const filters: FilterState = {};
   headers.forEach((header) => {
@@ -139,7 +149,9 @@ export default function App() {
 
   const handleExport = () => {
     const exportHeaders = headers.map((header) => tableHeaderLabels[header] ?? header);
-    const exportRows = filteredRows.map((row) => headers.map((header) => row[header] ?? ""));
+    const exportRows = filteredRows.map((row) =>
+      headers.map((header) => sanitizeCsvCell(row[header] ?? "")),
+    );
     const csv = Papa.unparse({
       fields: exportHeaders,
       data: exportRows,
