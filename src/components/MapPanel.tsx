@@ -9,6 +9,10 @@ import { useEffect, useMemo } from "react";
 import type { SpecimenRecord } from "../lib/csv";
 import { toNumber } from "../lib/filtering";
 
+const MAX_MAP_POINTS_DESKTOP = 5000;
+const MAX_MAP_POINTS_MOBILE = 1200;
+const TOOLTIP_POINT_LIMIT = 1500;
+
 type MapPanelProps = {
   rows: SpecimenRecord[];
   latColumn: string | null;
@@ -27,6 +31,19 @@ type Point = {
   locality?: string;
   row: SpecimenRecord;
 };
+
+function samplePoints(points: Point[], limit: number): Point[] {
+  if (points.length <= limit) return points;
+
+  const sampled: Point[] = [];
+  const step = points.length / limit;
+
+  for (let i = 0; i < limit; i += 1) {
+    sampled.push(points[Math.floor(i * step)]);
+  }
+
+  return sampled;
+}
 
 function FitBounds({ points }: { points: Point[] }) {
   const map = useMap();
@@ -57,7 +74,7 @@ export default function MapPanel({
   localityColumn,
   onSelectRow,
 }: MapPanelProps) {
-  const points = useMemo<Point[]>(() => {
+  const allPoints = useMemo<Point[]>(() => {
     if (!latColumn || !lonColumn) return [];
 
     const validPoints: Point[] = [];
@@ -94,6 +111,23 @@ export default function MapPanel({
     localityColumn,
   ]);
 
+  const maxPoints = useMemo(() => {
+    if (typeof window === "undefined") {
+      return MAX_MAP_POINTS_DESKTOP;
+    }
+
+    return window.matchMedia("(max-width: 768px)").matches
+      ? MAX_MAP_POINTS_MOBILE
+      : MAX_MAP_POINTS_DESKTOP;
+  }, []);
+
+  const points = useMemo(() => {
+    return samplePoints(allPoints, maxPoints);
+  }, [allPoints, maxPoints]);
+
+  const pointsWereLimited = allPoints.length > points.length;
+  const showTooltips = points.length <= TOOLTIP_POINT_LIMIT;
+
   const firstPoint = points[0];
 
   const center: [number, number] = firstPoint
@@ -112,14 +146,21 @@ export default function MapPanel({
           </p>
         </div>
         <span className="badge">
-          {points.length} points
+          {points.length} of {allPoints.length} points
         </span>
       </div>
+
+      {pointsWereLimited && (
+        <p className="mt-2 text-xs text-slate-600">
+          Showing a sampled subset on the map to improve mobile stability.
+        </p>
+      )}
 
       <div className="mt-4 h-[520px] overflow-hidden rounded-2xl border border-sky-200">
         <MapContainer
           center={center}
           zoom={5}
+          preferCanvas
           className="h-full w-full"
         >
           <TileLayer
@@ -141,24 +182,26 @@ export default function MapPanel({
                 click: () => onSelectRow(point.row),
               }}
             >
-              <Tooltip
-                direction="top"
-                offset={[0, -8]}
-                opacity={1}
-              >
-                <div className="text-xs">
-                  <div className="font-semibold">
-                    {point.scientific || "Unknown species"}
+              {showTooltips && (
+                <Tooltip
+                  direction="top"
+                  offset={[0, -8]}
+                  opacity={1}
+                >
+                  <div className="text-xs">
+                    <div className="font-semibold">
+                      {point.scientific || "Unknown species"}
+                    </div>
+                    <div>
+                      Catalog: {point.catalog || "N/A"}
+                    </div>
+                    <div>
+                      {point.locality ||
+                        "Locality not provided"}
+                    </div>
                   </div>
-                  <div>
-                    Catalog: {point.catalog || "N/A"}
-                  </div>
-                  <div>
-                    {point.locality ||
-                      "Locality not provided"}
-                  </div>
-                </div>
-              </Tooltip>
+                </Tooltip>
+              )}
             </CircleMarker>
           ))}
 
