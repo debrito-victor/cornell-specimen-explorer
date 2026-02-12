@@ -1,29 +1,36 @@
 # Cornell Specimen Explorer
 
-A modern specimen exploration web application for the Cornell University Museum of Vertebrates.
+Interactive web app for exploring Cornell University Museum of Vertebrates fish specimen records.
 
-## Requirements
+## Live Site
 
-- Node.js 18+ recommended
+https://debrito-victor.github.io/cornell-specimen-explorer/
 
-## Setup
+## What This App Does
 
-1. Install dependencies
+- Loads specimen records from a CSV dataset
+- Filters records across multiple fields
+- Displays matching records in a paginated table
+- Maps georeferenced specimens on an interactive map
+- Exports filtered results to CSV
+
+## Run Locally
 
 ```bash
 npm install
-```
-
-2. Start the dev server
-
-```bash
 npm run dev
 ```
 
-## Data Source
+## Build
 
-The app loads `fish_collection.csv` from the project `public/` folder. The repository already includes a copy at:
+```bash
+npm run build
+```
+
+## Data File
+
+The app reads data from:
 
 - `public/fish_collection.csv`
 
-If you update the dataset, replace that file with your latest CSV.
+Replace that file to publish a newer dataset.
