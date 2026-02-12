@@ -182,7 +182,11 @@ export default function App() {
       <header className="border-b border-sky-200 bg-white">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-6">
           <div className="flex items-center gap-4">
-            <img src="/CUMV_logo.png" alt="CUMV Logo" className="h-16 w-16" />
+            <img
+              src={`${import.meta.env.BASE_URL}CUMV_logo.png`}
+              alt="CUMV Logo"
+              className="h-16 w-16"
+            />
             <div>
               <p
                 className="text-xs uppercase tracking-[0.4em] text-slate-600"
