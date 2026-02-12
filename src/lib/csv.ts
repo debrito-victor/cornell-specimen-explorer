@@ -33,7 +33,9 @@ export function toDisplayLabel(header: string): string {
   return spaced.charAt(0).toUpperCase() + spaced.slice(1);
 }
 
-export async function loadCsvData(path = "/fish_collection.csv"): Promise<CsvLoadResult> {
+export async function loadCsvData(
+  path = `${import.meta.env.BASE_URL}fish_collection.csv`,
+): Promise<CsvLoadResult> {
   const response = await fetch(path);
   if (!response.ok) {
     throw new Error(`Failed to load CSV: ${response.status}`);

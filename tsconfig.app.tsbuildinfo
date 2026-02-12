@@ -1,1 +1,0 @@
-{"root":["./src/app.tsx","./src/main.tsx","./src/components/dashboard.tsx","./src/components/filterfield.tsx","./src/components/filterpanel.tsx","./src/components/mappanel.tsx","./src/components/pagination.tsx","./src/components/resultstable.tsx","./src/components/tabs.tsx","./src/lib/csv.ts","./src/lib/filtering.ts"],"errors":true,"version":"5.9.3"}
