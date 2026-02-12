@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply text-slate-900;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.glass {
+  @apply bg-sky-100 border border-sky-200 shadow-glass text-slate-900;
+}
+
+.card {
+  @apply glass rounded-3xl p-6;
+}
+
+.input {
+  @apply w-full rounded-2xl border border-black/10 bg-white/80 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cornell-400;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center rounded-2xl border border-sky-300 bg-sky-50 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-sky-100;
+}
+
+.btn-primary {
+  @apply bg-cornell-500/90 border-cornell-400 text-white hover:bg-cornell-500;
+}
+
+.badge {
+  @apply rounded-full bg-sky-200 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-700;
+}
+
+.table-header {
+  @apply sticky top-0 z-10 bg-white/80 backdrop-blur-xl;
+}
+
+.scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(15, 23, 42, 0.3) transparent;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.3);
+  border-radius: 999px;
+}
