@@ -277,7 +277,29 @@ export default function App() {
               rel="noreferrer"
               className="text-sky-700 underline hover:text-sky-900"
             >
-              www.cumv.cornell.edu
+              https://www.cumv.cornell.edu/
+            </a>
+          </p>
+          <p className="mt-3 font-semibold">Collection Manager:</p>
+          <p>Victor de Brito, Ph.D.</p>
+          <p>
+            Email:{" "}
+            <a
+              href="mailto:victordebrito@cornell.edu"
+              className="text-sky-700 underline hover:text-sky-900"
+            >
+              victordebrito@cornell.edu
+            </a>
+          </p>
+          <p className="mt-3 font-semibold">Curator:</p>
+          <p>Casey B. Dillman, Ph.D.</p>
+          <p>
+            Email:{" "}
+            <a
+              href="mailto:cbd63@cornell.edu"
+              className="text-sky-700 underline hover:text-sky-900"
+            >
+              cbd63@cornell.edu
             </a>
           </p>
         </div>
