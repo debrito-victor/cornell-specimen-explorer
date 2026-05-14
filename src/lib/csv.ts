@@ -34,7 +34,7 @@ export function toDisplayLabel(header: string): string {
 }
 
 export async function loadCsvData(
-  path = `${import.meta.env.BASE_URL}fish_collection.csv`,
+  path = `${import.meta.env.BASE_URL}fish_collection_updated.csv`,
 ): Promise<CsvLoadResult> {
   const response = await fetch(path);
   if (!response.ok) {

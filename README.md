@@ -31,7 +31,7 @@ npm run build
 
 The app reads data from:
 
-- `public/fish_collection.csv`
+- `public/fish_collection_updated.csv`
 
 Replace that file to publish a newer dataset.
 
